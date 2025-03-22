@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/menu.dart'; // Importa el archivo menu.dart
 
 void main() {
   runApp(const MyApp());
 }
 
-// MyApp es un StatelessWidget que representa toda la aplicación
-// StatelessWidget significa que este widget no cambia su estado internamente
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // MaterialApp es el widget raíz que proporciona muchas funcionalidades básicas
     return MaterialApp(
       title: 'Promolider Login',
-      debugShowCheckedModeBanner:
-          false, // Esto elimina el banner de "debug" en la esquina
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Configuración del tema de la aplicación
         primaryColor: Colors.green,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
-      home: const LoginPage(), // Definimos la página de inicio
+      home: const LoginPage(),
     );
   }
 }
 
-// LoginPage es un StatefulWidget porque necesitamos manejar estados como
-// el texto ingresado en los campos de usuario y contraseña
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -48,23 +42,21 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Scaffold proporciona la estructura básica de la página (como AppBar, body, etc.)
-      appBar: AppBar(
-        title: const Text('Login', style: TextStyle(color: Colors.black54)),
-        backgroundColor: Colors.white,
-        elevation: 0, // Sin sombra en el AppBar
-      ),
       body: Stack(
         // Stack permite colocar widgets uno encima de otro
         children: [
-          // Fondo con imagen de personas
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  'assets/background.jpg',
-                ), // Asegúrate de tener esta imagen en tu carpeta assets
-                fit: BoxFit.cover,
-                opacity: 0.7, // Opacidad para que se vea ligeramente
+          // Fondo con imagen de personas en la mitad superior
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 2,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/background.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -76,14 +68,17 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(20),
               child: Card(
                 // Card crea un panel con bordes redondeados y sombra
-                color: Colors.black.withOpacity(
-                  0.8,
-                ), // Fondo oscuro semi-transparente
+                color: const Color.fromRGBO(
+                  32,
+                  35,
+                  41,
+                  1,
+                ).withOpacity(1.0), // Fondo oscuro semi-transparente
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(36),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(34),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -93,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Image.asset(
                             'assets/promolider_logo.png', // Asegúrate de tener esta imagen
-                            width: 190,
+                            width: 220,
+                            height: 100,
                           ),
                         ],
                       ),
@@ -119,19 +115,27 @@ class _LoginPageState extends State<LoginPage> {
                       // Campo de texto para el usuario
                       TextField(
                         controller: _usernameController,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 8, 8, 8),
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Ingresar nombre de usuario',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
                           filled: true,
-                          fillColor: Colors.white.withOpacity(0.1),
+                          fillColor: Colors.white.withOpacity(1.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
-                          prefixIcon: const Icon(
+                          /* prefixIcon: const Icon(
                             Icons.person,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),*/
+                          suffixIcon: const Icon(
+                            Icons.person,
+                            color: Color.fromARGB(255, 32, 31, 31),
                           ),
                         ),
                       ),
@@ -152,19 +156,27 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _passwordController,
                         obscureText:
                             true, // Esto hace que se muestren asteriscos en vez del texto
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Ingresar contraseña',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
                           filled: true,
-                          fillColor: Colors.white.withOpacity(0.1),
+                          fillColor: Colors.white.withOpacity(1.0),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide.none,
                           ),
-                          prefixIcon: const Icon(
+                          /* prefixIcon: const Icon(
                             Icons.lock,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),*/
+                          suffixIcon: const Icon(
+                            Icons.lock,
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
                       ),
@@ -182,12 +194,17 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             fillColor: MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
-                                return Colors.green;
+                                return const Color.fromRGBO(
+                                  32,
+                                  35,
+                                  41,
+                                  1,
+                                ).withOpacity(1.0);
                               },
                             ),
                           ),
                           const Text(
-                            'Recordarme',
+                            'Recuérdame',
                             style: TextStyle(color: Colors.white, fontSize: 12),
                           ),
                           const Spacer(), // Espacio flexible
@@ -198,8 +215,11 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text(
                               '¿Olvidaste tu contraseña?',
                               style: TextStyle(
-                                color: Colors.green,
+                                color: Color.fromARGB(255, 255, 255, 255),
                                 fontSize: 12,
+                                decoration:
+                                    TextDecoration
+                                        .underline, // Subraya el texto
                               ),
                             ),
                           ),
@@ -208,63 +228,80 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 16),
 
                       // Checkbox "No soy un Robot"
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              value: _notRobot,
-                              onChanged: (value) {
-                                setState(() {
-                                  _notRobot = value ?? false;
-                                });
-                              },
-                              fillColor:
-                                  MaterialStateProperty.resolveWith<Color>((
-                                    Set<MaterialState> states,
-                                  ) {
-                                    return Colors.white;
-                                  }),
-                              checkColor: Colors.green,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: _notRobot,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _notRobot = value ?? false;
+                                    });
+                                  },
+                                  fillColor:
+                                      MaterialStateProperty.resolveWith<Color>((
+                                        Set<MaterialState> states,
+                                      ) {
+                                        return const Color.fromRGBO(
+                                          32,
+                                          35,
+                                          41,
+                                          1,
+                                        ).withOpacity(1.0);
+                                      }),
+                                ),
+                                const Text(
+                                  'No soy un Robot',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Image.asset(
+                                    'assets/recaptcha.png', // Asegúrate de tener esta imagen
+                                    height: 30,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const Text(
-                              'No soy un Robot',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              child: Image.asset(
-                                'assets/recaptcha.png', // Asegúrate de tener esta imagen
-                                height: 30,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 34),
 
                       // Botón de Ingresar
                       ElevatedButton(
                         onPressed: () {
-                          // Aquí iría la lógica para validar el login
-                          print('Usuario: ${_usernameController.text}');
-                          print('Contraseña: ${_passwordController.text}');
+                          // Navega a la pantalla principal (menu.dart) al hacer clic en "Ingresar"
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainScreen(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: const Color.fromRGBO(32, 35, 41, 1),
                           minimumSize: const Size(
                             double.infinity,
-                            50,
+                            45,
                           ), // Ancho completo
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
+                            side: const BorderSide(
+                              color: Color.fromARGB(255, 43, 219, 27),
+                            ),
                           ),
                         ),
                         child: const Text(
@@ -276,6 +313,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 80),
                     ],
                   ),
                 ),

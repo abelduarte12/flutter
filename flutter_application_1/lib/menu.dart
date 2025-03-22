@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/main.dart'; // Importa el archivo main.dart
+import 'package:flutter_application_1/marketplace.dart'; // Importa el archivo marketplace.dart
+import 'package:flutter_application_1/registro_principal.dart';
+import 'package:flutter_application_1/masterclass_1.dart';
 
 void main() {
   // Punto de entrada de la aplicación
@@ -74,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
               // Cabecera del menú con logo
               Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 30,
+                  vertical: 50,
                   horizontal: 16,
                 ),
                 child: Row(
@@ -112,18 +116,49 @@ class _MainScreenState extends State<MainScreen> {
                 icon: Icons.school,
                 title: 'Masterclass',
                 index: 2,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MasterclassCreationScreen(),
+                    ),
+                  );
+                },
               ),
 
-              _buildMenuItem(
-                icon: Icons.shopping_cart,
-                title: 'Marketplace',
-                index: 3,
+              ListTile(
+                leading: const Icon(Icons.shopping_cart, color: Colors.white),
+                title: const Text(
+                  'Marketplace',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PromoHomePage(),
+                    ),
+                  );
+                },
               ),
 
+              /* _buildMenuItem(
+                icon: Icons.assignment,
+                title: 'Registros',
+                index: 4,
+              ),*/
               _buildMenuItem(
                 icon: Icons.assignment,
                 title: 'Registros',
                 index: 4,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MasterPromoLiderApp(),
+                    ),
+                  );
+                },
               ),
 
               const Spacer(), // Espacio flexible para empujar el botón de cerrar sesión al fondo
@@ -132,7 +167,13 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
                   onTap: () {
-                    // Acción para cerrar sesión
+                    // Navega a la pantalla principal (main.dart) al hacer clic en "Cerrar Sesión"
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -169,6 +210,7 @@ class _MainScreenState extends State<MainScreen> {
     required IconData icon,
     required String title,
     required int index,
+    VoidCallback? onTap,
   }) {
     bool isSelected = _selectedIndex == index;
 
@@ -177,10 +219,14 @@ class _MainScreenState extends State<MainScreen> {
       title: Text(title, style: const TextStyle(color: Colors.white)),
       // Cambia el color de fondo si está seleccionado
       tileColor: isSelected ? Colors.green.withOpacity(0.3) : null,
-      onTap: () {
-        _onItemTapped(index);
-        Navigator.pop(context); // Cierra el drawer al seleccionar una opción
-      },
+      onTap:
+          onTap ??
+          () {
+            _onItemTapped(index);
+            Navigator.pop(
+              context,
+            ); // Cierra el drawer al seleccionar una opción
+          },
     );
   }
 }
